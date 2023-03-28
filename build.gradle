@@ -59,9 +59,41 @@ axelor {
 }
 
 dependencies {
-  gradle.appModules.each { dir ->
-    implementation project(":modules:$dir.name")
-  }
+  ext.axelorVersion = '6.5.3'
+  implementation "com.axelor.apps:axelor-account:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-admin:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-bank-payment:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-base:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-bpm:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-business-production:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-business-project:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-business-support:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-cash-management:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-client-portal:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-contract:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-crm:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-exception:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-fleet:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-gdpr:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-helpdesk:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-human-resource:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-maintenance:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-marketing:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-message:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-mobile:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-production:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-project:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-project-dms:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-purchase:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-quality:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-sale:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-stock:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-studio:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-supplier-management:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-supplier-portal:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-supplychain:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-talent:${axelorVersion}"
+  implementation "com.axelor.apps:axelor-tool:${axelorVersion}"
 }
 
 task("dataImport", type: JavaExec) {
@@ -71,21 +103,6 @@ task("dataImport", type: JavaExec) {
     args System.getProperty("exec.args").split()
   }
 }
-
-task archiveReports(type: Zip) {
-  file("modules").traverse(type: groovy.io.FileType.DIRECTORIES, maxDepth: 1) { dir ->
-    if (new File(dir, "build.gradle").exists() && new File(dir, "/src/main/resources/reports").exists()) {
-      new File(dir, "/src/main/resources/reports/").listFiles().each { report ->
-        from report.getPath()
-      }
-    }
-  }
-
-  classifier 'reports'
-  includeEmptyDirs = false
-  destinationDirectory = file("$buildDir/libs")
-}
-
 
 task generateChangeLog(type: GenerateAosChangelog) {
   group "Axelor application"
@@ -106,5 +123,3 @@ task checkCsvEOL(type: CheckEOLCharsInCsv) {
     include '**/*.csv'
   }
 }
-
-build.finalizedBy archiveReports
