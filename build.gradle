@@ -59,9 +59,40 @@ axelor {
 }
 
 dependencies {
-  gradle.appModules.each { dir ->
-    implementation project(":modules:$dir.name")
-  }
+  implementation "com.axelor.apps:axelor-account:6.5.2"
+  implementation "com.axelor.apps:axelor-admin:6.5.2"
+  implementation "com.axelor.apps:axelor-bank-payment:6.5.2"
+  implementation "com.axelor.apps:axelor-base:6.5.2"
+  implementation "com.axelor.apps:axelor-bpm:6.5.2"
+  implementation "com.axelor.apps:axelor-business-production:6.5.2"
+  implementation "com.axelor.apps:axelor-business-project:6.5.2"
+  implementation "com.axelor.apps:axelor-business-support:6.5.2"
+  implementation "com.axelor.apps:axelor-cash-management:6.5.2"
+  implementation "com.axelor.apps:axelor-client-portal:6.5.2"
+  implementation "com.axelor.apps:axelor-contract:6.5.2"
+  implementation "com.axelor.apps:axelor-crm:6.5.2"
+  implementation "com.axelor.apps:axelor-exception:6.5.2"
+  implementation "com.axelor.apps:axelor-fleet:6.5.2"
+  implementation "com.axelor.apps:axelor-gdpr:6.5.2"
+  implementation "com.axelor.apps:axelor-helpdesk:6.5.2"
+  implementation "com.axelor.apps:axelor-human-resource:6.5.2"
+  implementation "com.axelor.apps:axelor-maintenance:6.5.2"
+  implementation "com.axelor.apps:axelor-marketing:6.5.2"
+  implementation "com.axelor.apps:axelor-message:6.5.2"
+  implementation "com.axelor.apps:axelor-mobile:6.5.2"
+  implementation "com.axelor.apps:axelor-production:6.5.2"
+  implementation "com.axelor.apps:axelor-project:6.5.2"
+  implementation "com.axelor.apps:axelor-project-dms:6.5.2"
+  implementation "com.axelor.apps:axelor-purchase:6.5.2"
+  implementation "com.axelor.apps:axelor-quality:6.5.2"
+  implementation "com.axelor.apps:axelor-sale:6.5.2"
+  implementation "com.axelor.apps:axelor-stock:6.5.2"
+  implementation "com.axelor.apps:axelor-studio:6.5.2"
+  implementation "com.axelor.apps:axelor-supplier-management:6.5.2"
+  implementation "com.axelor.apps:axelor-supplier-portal:6.5.2"
+  implementation "com.axelor.apps:axelor-supplychain:6.5.2"
+  implementation "com.axelor.apps:axelor-talent:6.5.2"
+  implementation "com.axelor.apps:axelor-tool:6.5.2"
 }
 
 task("dataImport", type: JavaExec) {
@@ -71,21 +102,6 @@ task("dataImport", type: JavaExec) {
     args System.getProperty("exec.args").split()
   }
 }
-
-task archiveReports(type: Zip) {
-  file("modules").traverse(type: groovy.io.FileType.DIRECTORIES, maxDepth: 1) { dir ->
-    if (new File(dir, "build.gradle").exists() && new File(dir, "/src/main/resources/reports").exists()) {
-      new File(dir, "/src/main/resources/reports/").listFiles().each { report ->
-        from report.getPath()
-      }
-    }
-  }
-
-  classifier 'reports'
-  includeEmptyDirs = false
-  destinationDirectory = file("$buildDir/libs")
-}
-
 
 task generateChangeLog(type: GenerateAosChangelog) {
   group "Axelor application"
@@ -106,5 +122,3 @@ task checkCsvEOL(type: CheckEOLCharsInCsv) {
     include '**/*.csv'
   }
 }
-
-build.finalizedBy archiveReports
