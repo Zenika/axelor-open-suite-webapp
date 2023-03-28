@@ -8,9 +8,11 @@ services:
     depends_on:
       - postgres
     volumes:
-      - "./build/libs/axelor-erp-6.5.2.war:/usr/local/tomcat/webapps/ROOT.war"
+      - "./build/libs/axelor-erp-6.5.3.war:/usr/local/tomcat/webapps/ROOT.war"
   postgres:
     image: postgres:9.4
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: axelor
       POSTGRES_PASSWORD: axelor

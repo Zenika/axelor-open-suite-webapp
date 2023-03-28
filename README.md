@@ -11,8 +11,13 @@ Ce code est utile dans le cadre de la mission de @patou et @hgwood chez leur cli
 ## Building and running the application without submodules
 
 - Checkout `no-submodules`
+Version Docker
 - Run `./gradlew build`: this should successfully build a war file in `./build/libs`
 - Run `docker compose up`: the app should be available on `http://localhost:8889` after a few minutes
+
+Version Gradle
+- Run `docker compose up postgres` or a database of your choice (configure the database in application.properties)
+- Run `./gradlew run`: the app should be available on `http://localhost:8080/axelor-erp` after a few minutes
 
 # Original README
 
